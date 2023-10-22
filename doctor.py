@@ -45,7 +45,7 @@ hea = {"User-Agent":
 
 a = requests.post("http://timtimtimtimtim.pythonanywhere.com/%E5%B8%A5tim%E7%B5%90%E6%9E%9C%E5%88%86%E6%9E%90",headers=hea,data = data)
 
-soup = bs4.BeautifulSoup(a.text, 'html.parser')
+soup = BeautifulSoup(a.text, 'html.parser')
 
 # 找到具有 class="card-text" 的 <p> 元素
 card_text_element = soup.find('p', class_='card-text')

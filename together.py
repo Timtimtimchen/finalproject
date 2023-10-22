@@ -93,3 +93,39 @@ def doctor():
     tts = gTTS(card_text_element.string,lang="zh-TW")
     tts.save("aa.mp3")
     os.system("mpg123 aa.mp3")
+def hugio():
+    while True:
+        try:
+            r = sr.Recognizer()
+            with sr.Microphone() as source:
+                audio = r.listen(source)
+            hugio = r.recognize_google(audio, language='zh-TW')
+        except:
+            continue
+        if hugio =="大頭":
+            break
+
+while True:
+    hugio()
+    tts = gTTS("你好 我是大頭 請選擇  一 天氣預報  二  查字典 三 初步診療",lang="zh-TW")
+    tts.save("aa.mp3")
+    os.system("mpg123 aa.mp3")
+    try:
+        r = sr.Recognizer()
+        with sr.Microphone() as source:
+            audio = r.listen(source)
+        text = r.recognize_google(audio, language='zh-TW')
+    except:
+        tts = gTTS("聽不清楚 如有需求重新叫我")
+        tts.save("aa.mp3")
+        os.system("mpg123 aa.mp3")
+        continue
+
+    if text =="一":
+        sweater()
+        continue
+    elif text =="二":
+        wiki()
+    elif text =="三":
+        doctor()
+        continue
