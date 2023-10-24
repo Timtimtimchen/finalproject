@@ -19,11 +19,17 @@ def sweater():
     tts = gTTS("您想知道哪區明日天氣",lang="zh-TW")
     tts.save("aa.mp3")
     os.system("mpg123 aa.mp3")
-
-    r = sr.Recognizer()
-    with sr.Microphone() as source:
-        audio = r.listen(source,timeout=5)
-    a = r.recognize_google(audio, language='zh-TW')
+    try:
+        r = sr.Recognizer()
+        with sr.Microphone() as source:
+            audio = r.listen(source,timeout=5)
+        a = r.recognize_google(audio, language='zh-TW')
+    except:
+        tts = gTTS("不好意思 聽不清楚",lang="zh-TW")
+        tts.save("aa.mp3")
+        os.system("mpg123 aa.mp3")
+        return
+        
     for i in sweater[a]:
         #print(f"{a}明天天氣為{i}")
         tts = gTTS(f"{a}明天天氣為{i}",lang="zh-TW")
@@ -34,10 +40,16 @@ def wiki():
     tts = gTTS("您想查甚麼詞",lang="zh-TW")
     tts.save("aa.mp3")
     os.system("mpg123 aa.mp3")
-    r = sr.Recognizer()
-    with sr.Microphone() as source:
-        audio = r.listen(source,timeout=5)
-    text = r.recognize_google(audio, language='zh-TW')
+    try:
+        r = sr.Recognizer()
+        with sr.Microphone() as source:
+            audio = r.listen(source,timeout=5)
+        text = r.recognize_google(audio, language='zh-TW')
+    except:
+        tts = gTTS("不好意思 聽不清楚",lang="zh-TW")
+        tts.save("aa.mp3")
+        os.system("mpg123 aa.mp3")
+        return
     wikipedia.set_lang("zh")
     summary = wikipedia.summary(text)
     tts = gTTS(summary,lang="zh-TW")
@@ -49,19 +61,31 @@ def doctor():
     tts.save("aa.mp3")
     os.system("mpg123 aa.mp3")
     r = sr.Recognizer()
-    with sr.Microphone() as source:
-        audio = r.listen(source,timeout=5)
-    text = r.recognize_google(audio, language='zh-TW')
+    try:
+        with sr.Microphone() as source:
+            audio = r.listen(source,timeout=5)
+        text = r.recognize_google(audio, language='zh-TW')
+    except:
+        tts = gTTS("不好意思 聽不清楚",lang="zh-TW")
+        tts.save("aa.mp3")
+        os.system("mpg123 aa.mp3")
+        return
     tts = gTTS("持續幾天",lang="zh-TW")
     tts.save("aa.mp3")
     os.system("mpg123 aa.mp3")
-    time.sleep(4)
+    time.sleep(6)
     tts = gTTS("有沒有否服用其他藥物 請回復有或沒有",lang="zh-TW")
     tts.save("aa.mp3")
     os.system("mpg123 aa.mp3")
-    with sr.Microphone() as source:
-        audio = r.listen(source,timeout=5)
-    med = r.recognize_google(audio, language='zh-TW')
+    try:
+        with sr.Microphone() as source:
+            audio = r.listen(source,timeout=5)
+        med = r.recognize_google(audio, language='zh-TW')
+    except:
+        tts = gTTS("不好意思 聽不清楚",lang="zh-TW")
+        tts.save("aa.mp3")
+        os.system("mpg123 aa.mp3")
+        return
     if med =="有":
         tts = gTTS("甚麼藥名",lang="zh-TW")
         tts.save("aa.mp3")
@@ -87,7 +111,6 @@ def doctor():
 
     soup = bs4.BeautifulSoup(a.text, 'html.parser')
     
-    # 找到具有 class="card-text" 的 <p> 元素
     card_text_element = soup.find('p', class_='card-text')
 
     tts = gTTS(card_text_element.string,lang="zh-TW")
@@ -126,6 +149,7 @@ while True:
         continue
     elif text =="二":
         wiki()
+        continue
     elif text =="三":
         doctor()
         continue
