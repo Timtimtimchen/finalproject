@@ -90,9 +90,15 @@ def doctor():
         tts = gTTS("甚麼藥名",lang="zh-TW")
         tts.save("aa.mp3")
         os.system("mpg123 aa.mp3")
-        with sr.Microphone() as source:
-            audio = r.listen(source,timeout=5)
-        medname = r.recognize_google(audio, language='zh-TW')
+        try:
+            with sr.Microphone() as source:
+                audio = r.listen(source,timeout=5)
+            medname = r.recognize_google(audio, language='zh-TW')
+        except:
+            tts = gTTS("不好意思 聽不清楚",lang="zh-TW")
+            tts.save("aa.mp3")
+            os.system("mpg123 aa.mp3")
+            return
     tts = gTTS("稍等 正在分析診斷結果",lang="zh-TW")
     tts.save("aa.mp3")
     os.system("mpg123 aa.mp3")
@@ -101,7 +107,7 @@ def doctor():
     "symptoms":f"{text}",
     "duration":"3",
     "medications":f"{med}",
-    "medication_name":f"{medname}",
+    "medication_name":"a酸",
     "food":"no"
     }
     hea = {"User-Agent":
@@ -123,14 +129,18 @@ def hugio():
             with sr.Microphone() as source:
                 audio = r.listen(source)
             hugio = r.recognize_google(audio, language='zh-TW')
+            print(hugio)
         except:
+            tts = gTTS("聽不清楚 如有需求重新叫我",lang="zh-TW")
+            tts.save("aa.mp3")
+            os.system("mpg123 aa.mp3")
             continue
         if hugio =="大頭":
             break
 
 while True:
     hugio()
-    tts = gTTS("你好 我是大頭 請選擇  一 天氣預報  二  查字典 三 初步診療",lang="zh-TW")
+    tts = gTTS("你好 我是大頭 請選擇  零一 天氣預報  零二  查字典 零三 初步診療",lang="zh-TW")
     tts.save("aa.mp3")
     os.system("mpg123 aa.mp3")
     try:
@@ -138,18 +148,19 @@ while True:
         with sr.Microphone() as source:
             audio = r.listen(source)
         text = r.recognize_google(audio, language='zh-TW')
+        print(text)
     except:
-        tts = gTTS("聽不清楚 如有需求重新叫我")
+        tts = gTTS("聽不清楚 如有需求重新叫我",lang="zh-TW")
         tts.save("aa.mp3")
         os.system("mpg123 aa.mp3")
         continue
 
-    if text =="一":
+    if text =="零一" or text =="01":
         sweater()
         continue
-    elif text =="二":
+    elif text =="零二" or text =="02":
         wiki()
         continue
-    elif text =="三":
+    elif text =="零三" or text =="03":
         doctor()
         continue
