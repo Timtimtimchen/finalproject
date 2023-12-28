@@ -2,7 +2,7 @@ import speech_recognition as sr
 import wikipedia
 import requests
 import json
-import time
+import time 
 import bs4
 import pyttsx3
 
@@ -29,7 +29,8 @@ def sweater():
         engine.say("不好意思 聽不清楚")
         engine.runAndWait()
         return
-        
+    if "台" in a:
+        a = a.replace("台","臺")
     for i in sweater[a]:
         #print(f"{a}明天天氣為{i}")
         # tts = gTTS(f"{a}明天天氣為{i}",lang="zh-TW")
@@ -159,11 +160,16 @@ def hugio():
             # tts = gTTS("聽不清楚 如有需求重新叫我",lang="zh-TW")
             # tts.save("aa.mp3")
             # os.system("mpg123 aa.mp3")
+            # engine.say("聽不清楚 如有需求重新叫我")
+            # engine.runAndWait()
+            continue
+        if hugio =="大頭" or '大同':
+            break
+        elif hugio:
             engine.say("聽不清楚 如有需求重新叫我")
             engine.runAndWait()
             continue
-        if hugio =="大頭":
-            break
+
 
 while True:
     engine = pyttsx3.init()
